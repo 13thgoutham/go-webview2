@@ -24,7 +24,7 @@ func (i *ICoreWebView2Profile2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2Profile2() *ICoreWebView2Profile2 {
+func (i *ICoreWebView2Profile) GetICoreWebView2Profile2() *ICoreWebView2Profile2 {
 	var result *ICoreWebView2Profile2
 
 	iidICoreWebView2Profile2 := NewGUID("{fa740d4b-5eae-4344-a8ad-74be31925397}")

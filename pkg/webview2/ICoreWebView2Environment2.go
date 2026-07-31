@@ -22,7 +22,7 @@ func (i *ICoreWebView2Environment2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2Environment2() *ICoreWebView2Environment2 {
+func (i *ICoreWebView2Environment) GetICoreWebView2Environment2() *ICoreWebView2Environment2 {
 	var result *ICoreWebView2Environment2
 
 	iidICoreWebView2Environment2 := NewGUID("{41f3632b-5ef4-404f-ad82-2d606c5a9a21}")

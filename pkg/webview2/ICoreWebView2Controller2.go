@@ -23,7 +23,7 @@ func (i *ICoreWebView2Controller2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2Controller2() *ICoreWebView2Controller2 {
+func (i *ICoreWebView2Controller) GetICoreWebView2Controller2() *ICoreWebView2Controller2 {
 	var result *ICoreWebView2Controller2
 
 	iidICoreWebView2Controller2 := NewGUID("{c979903e-d4ca-4228-92eb-47ee3fa96eab}")
@@ -51,9 +51,12 @@ func (i *ICoreWebView2Controller2) GetDefaultBackgroundColor() (COREWEBVIEW2_COL
 
 func (i *ICoreWebView2Controller2) PutDefaultBackgroundColor(value COREWEBVIEW2_COLOR) error {
 
+	// COREWEBVIEW2_COLOR is a 4-byte POD passed BY VALUE in a register, so the argument is
+	// the struct's bits, not its address. Reading it back out as a uint32 reproduces the
+	// exact memory layout rather than re-deriving the channel order by hand.
 	hr, _, _ := i.Vtbl.PutDefaultBackgroundColor.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		uintptr(*(*uint32)(unsafe.Pointer(&value))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
