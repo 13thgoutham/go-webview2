@@ -171,7 +171,7 @@ func (i *ICoreWebView2Settings) PutAreDevToolsEnabled(areDevToolsEnabled bool) e
 
 	hr, _, _ := i.Vtbl.PutAreDevToolsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&areDevToolsEnabled)),
+		boolToUintptr(areDevToolsEnabled),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

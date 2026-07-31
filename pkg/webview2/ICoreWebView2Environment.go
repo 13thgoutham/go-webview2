@@ -30,7 +30,7 @@ func (i *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow HWN
 
 	hr, _, _ := i.Vtbl.CreateCoreWebView2Controller.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&parentWindow)),
+		uintptr(parentWindow),
 		uintptr(unsafe.Pointer(handler)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

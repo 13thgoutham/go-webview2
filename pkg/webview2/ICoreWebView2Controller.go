@@ -64,7 +64,7 @@ func (i *ICoreWebView2Controller) PutIsVisible(isVisible bool) error {
 
 	hr, _, _ := i.Vtbl.PutIsVisible.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&isVisible)),
+		boolToUintptr(isVisible),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
