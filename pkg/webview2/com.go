@@ -360,3 +360,16 @@ func (i *IStream) Read(p []byte) (int, error) {
 		return 0, syscall.Errno(res)
 	}
 }
+
+// boolToUintptr converts a Go bool to a Win32 BOOL passed by value.
+//
+// A COM in-parameter declared BOOL is a 4-byte integer passed BY VALUE. Handing the
+// address of a Go bool instead makes the callee read a pointer as an integer, which is
+// both wrong and non-deterministic. Upstream fixed this shape once already in v1.0.23
+// (PutShouldDetectMonitorScaleChanges); these are further instances.
+func boolToUintptr(b bool) uintptr {
+	if b {
+		return 1
+	}
+	return 0
+}
