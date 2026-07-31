@@ -99,7 +99,7 @@ func (i *ICoreWebView2) GetSource() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetSource.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_uri)),
+		uintptr(unsafe.Pointer(&_uri)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -744,7 +744,7 @@ func (i *ICoreWebView2) GetDocumentTitle() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetDocumentTitle.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_title)),
+		uintptr(unsafe.Pointer(&_title)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

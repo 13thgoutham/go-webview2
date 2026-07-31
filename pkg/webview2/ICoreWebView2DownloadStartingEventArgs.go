@@ -77,7 +77,7 @@ func (i *ICoreWebView2DownloadStartingEventArgs) GetResultFilePath() (string, er
 
 	hr, _, _ := i.Vtbl.GetResultFilePath.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_resultFilePath)),
+		uintptr(unsafe.Pointer(&_resultFilePath)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

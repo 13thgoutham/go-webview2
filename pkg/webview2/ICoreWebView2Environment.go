@@ -73,7 +73,7 @@ func (i *ICoreWebView2Environment) GetBrowserVersionString() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetBrowserVersionString.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_versionInfo)),
+		uintptr(unsafe.Pointer(&_versionInfo)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

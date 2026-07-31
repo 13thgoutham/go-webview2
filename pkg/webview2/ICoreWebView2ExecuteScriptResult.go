@@ -47,7 +47,7 @@ func (i *ICoreWebView2ExecuteScriptResult) GetResultAsJson() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetResultAsJson.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_jsonResult)),
+		uintptr(unsafe.Pointer(&_jsonResult)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -66,7 +66,7 @@ func (i *ICoreWebView2ExecuteScriptResult) TryGetResultAsString() (string, bool,
 
 	hr, _, _ := i.Vtbl.TryGetResultAsString.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_stringResult)),
+		uintptr(unsafe.Pointer(&_stringResult)),
 		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

@@ -69,7 +69,7 @@ func (i *ICoreWebView2_12) GetStatusBarText() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetStatusBarText.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

@@ -41,7 +41,7 @@ func (i *ICoreWebView2NavigationStartingEventArgs2) GetAdditionalAllowedFrameAnc
 
 	hr, _, _ := i.Vtbl.GetAdditionalAllowedFrameAncestors.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

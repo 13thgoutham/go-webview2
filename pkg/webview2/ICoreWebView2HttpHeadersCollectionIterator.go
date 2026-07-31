@@ -32,8 +32,8 @@ func (i *ICoreWebView2HttpHeadersCollectionIterator) GetCurrentHeader() (string,
 
 	hr, _, _ := i.Vtbl.GetCurrentHeader.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_name)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_name)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", "", syscall.Errno(hr)

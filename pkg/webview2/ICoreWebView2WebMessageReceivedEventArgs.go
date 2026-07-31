@@ -30,7 +30,7 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs) GetSource() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetSource.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -47,7 +47,7 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs) GetWebMessageAsJson() (string
 
 	hr, _, _ := i.Vtbl.GetWebMessageAsJson.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -64,7 +64,7 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs) TryGetWebMessageAsString() (s
 
 	hr, _, _ := i.Vtbl.TryGetWebMessageAsString.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

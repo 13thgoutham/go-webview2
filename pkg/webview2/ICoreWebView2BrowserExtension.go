@@ -32,7 +32,7 @@ func (i *ICoreWebView2BrowserExtension) GetId() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetId.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -49,7 +49,7 @@ func (i *ICoreWebView2BrowserExtension) GetName() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetName.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

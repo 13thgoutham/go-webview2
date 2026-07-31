@@ -55,7 +55,7 @@ func (i *ICoreWebView2PrintSettings2) GetPageRanges() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetPageRanges.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -246,7 +246,7 @@ func (i *ICoreWebView2PrintSettings2) GetPrinterName() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetPrinterName.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

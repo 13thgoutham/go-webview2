@@ -59,7 +59,7 @@ func (i *ICoreWebView2WebResourceResponseView) GetReasonPhrase() (string, error)
 
 	hr, _, _ := i.Vtbl.GetReasonPhrase.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_reasonPhrase)),
+		uintptr(unsafe.Pointer(&_reasonPhrase)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

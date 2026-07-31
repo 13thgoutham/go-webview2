@@ -41,7 +41,7 @@ func (i *ICoreWebView2Cookie) GetName() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetName.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_name)),
+		uintptr(unsafe.Pointer(&_name)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -58,7 +58,7 @@ func (i *ICoreWebView2Cookie) GetValue() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetValue.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -93,7 +93,7 @@ func (i *ICoreWebView2Cookie) GetDomain() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetDomain.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_domain)),
+		uintptr(unsafe.Pointer(&_domain)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -110,7 +110,7 @@ func (i *ICoreWebView2Cookie) GetPath() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetPath.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_path)),
+		uintptr(unsafe.Pointer(&_path)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

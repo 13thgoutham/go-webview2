@@ -345,7 +345,7 @@ func (i *ICoreWebView2PrintSettings) GetHeaderTitle() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetHeaderTitle.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_headerTitle)),
+		uintptr(unsafe.Pointer(&_headerTitle)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -380,7 +380,7 @@ func (i *ICoreWebView2PrintSettings) GetFooterUri() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetFooterUri.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_footerUri)),
+		uintptr(unsafe.Pointer(&_footerUri)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

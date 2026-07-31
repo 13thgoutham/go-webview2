@@ -84,7 +84,7 @@ func (i *ICoreWebView2HttpResponseHeaders) GetHeader(name string) (string, error
 	hr, _, _ := i.Vtbl.GetHeader.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

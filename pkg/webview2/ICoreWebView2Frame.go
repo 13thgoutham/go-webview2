@@ -35,7 +35,7 @@ func (i *ICoreWebView2Frame) GetName() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetName.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_name)),
+		uintptr(unsafe.Pointer(&_name)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

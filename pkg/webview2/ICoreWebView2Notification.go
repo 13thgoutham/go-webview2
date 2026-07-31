@@ -105,7 +105,7 @@ func (i *ICoreWebView2Notification) GetBody() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetBody.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -136,7 +136,7 @@ func (i *ICoreWebView2Notification) GetLanguage() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetLanguage.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -153,7 +153,7 @@ func (i *ICoreWebView2Notification) GetTag() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetTag.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -170,7 +170,7 @@ func (i *ICoreWebView2Notification) GetIconUri() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetIconUri.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -187,7 +187,7 @@ func (i *ICoreWebView2Notification) GetTitle() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetTitle.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -204,7 +204,7 @@ func (i *ICoreWebView2Notification) GetBadgeUri() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetBadgeUri.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -221,7 +221,7 @@ func (i *ICoreWebView2Notification) GetBodyImageUri() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetBodyImageUri.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

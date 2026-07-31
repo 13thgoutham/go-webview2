@@ -63,7 +63,7 @@ func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) GetDocumentOriginU
 
 	hr, _, _ := i.Vtbl.GetDocumentOriginUri.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -80,7 +80,7 @@ func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) GetFileExtension()
 
 	hr, _, _ := i.Vtbl.GetFileExtension.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -97,7 +97,7 @@ func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) GetFilePath() (str
 
 	hr, _, _ := i.Vtbl.GetFilePath.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

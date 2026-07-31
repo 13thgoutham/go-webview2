@@ -34,7 +34,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetSchemeName() (string, error) 
 
 	hr, _, _ := i.Vtbl.GetSchemeName.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_schemeName)),
+		uintptr(unsafe.Pointer(&_schemeName)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

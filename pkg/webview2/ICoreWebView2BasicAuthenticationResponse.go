@@ -31,7 +31,7 @@ func (i *ICoreWebView2BasicAuthenticationResponse) GetUserName() (string, error)
 
 	hr, _, _ := i.Vtbl.GetUserName.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_userName)),
+		uintptr(unsafe.Pointer(&_userName)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -66,7 +66,7 @@ func (i *ICoreWebView2BasicAuthenticationResponse) GetPassword() (string, error)
 
 	hr, _, _ := i.Vtbl.GetPassword.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_password)),
+		uintptr(unsafe.Pointer(&_password)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

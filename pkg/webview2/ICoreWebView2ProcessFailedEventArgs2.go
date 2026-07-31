@@ -71,7 +71,7 @@ func (i *ICoreWebView2ProcessFailedEventArgs2) GetProcessDescription() (string, 
 
 	hr, _, _ := i.Vtbl.GetProcessDescription.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_processDescription)),
+		uintptr(unsafe.Pointer(&_processDescription)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

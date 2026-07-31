@@ -35,7 +35,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetAdditionalBrowserArguments() (strin
 
 	hr, _, _ := i.Vtbl.GetAdditionalBrowserArguments.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -70,7 +70,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetLanguage() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetLanguage.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -105,7 +105,7 @@ func (i *ICoreWebView2EnvironmentOptions) GetTargetCompatibleBrowserVersion() (s
 
 	hr, _, _ := i.Vtbl.GetTargetCompatibleBrowserVersion.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

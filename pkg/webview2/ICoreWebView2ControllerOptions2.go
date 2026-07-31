@@ -41,7 +41,7 @@ func (i *ICoreWebView2ControllerOptions2) GetScriptLocale() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetScriptLocale.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

@@ -36,7 +36,7 @@ func (i *ICoreWebView2ClientCertificate) GetSubject() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetSubject.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -53,7 +53,7 @@ func (i *ICoreWebView2ClientCertificate) GetIssuer() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetIssuer.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -98,7 +98,7 @@ func (i *ICoreWebView2ClientCertificate) GetDerEncodedSerialNumber() (string, er
 
 	hr, _, _ := i.Vtbl.GetDerEncodedSerialNumber.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -115,7 +115,7 @@ func (i *ICoreWebView2ClientCertificate) GetDisplayName() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetDisplayName.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -132,7 +132,7 @@ func (i *ICoreWebView2ClientCertificate) ToPemEncoding() (string, error) {
 
 	hr, _, _ := i.Vtbl.ToPemEncoding.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_pemEncodedData)),
+		uintptr(unsafe.Pointer(&_pemEncodedData)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

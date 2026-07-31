@@ -40,7 +40,7 @@ func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs2) GetSessionId() (s
 
 	hr, _, _ := i.Vtbl.GetSessionId.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

@@ -127,7 +127,7 @@ func (i *ICoreWebView2DownloadOperation) GetUri() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetUri.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_uri)),
+		uintptr(unsafe.Pointer(&_uri)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -144,7 +144,7 @@ func (i *ICoreWebView2DownloadOperation) GetContentDisposition() (string, error)
 
 	hr, _, _ := i.Vtbl.GetContentDisposition.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_contentDisposition)),
+		uintptr(unsafe.Pointer(&_contentDisposition)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -161,7 +161,7 @@ func (i *ICoreWebView2DownloadOperation) GetMimeType() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetMimeType.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_mimeType)),
+		uintptr(unsafe.Pointer(&_mimeType)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -206,7 +206,7 @@ func (i *ICoreWebView2DownloadOperation) GetEstimatedEndTime() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetEstimatedEndTime.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_estimatedEndTime)),
+		uintptr(unsafe.Pointer(&_estimatedEndTime)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -223,7 +223,7 @@ func (i *ICoreWebView2DownloadOperation) GetResultFilePath() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetResultFilePath.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_resultFilePath)),
+		uintptr(unsafe.Pointer(&_resultFilePath)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

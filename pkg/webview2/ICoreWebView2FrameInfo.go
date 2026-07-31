@@ -29,7 +29,7 @@ func (i *ICoreWebView2FrameInfo) GetName() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetName.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -46,7 +46,7 @@ func (i *ICoreWebView2FrameInfo) GetSource() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetSource.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

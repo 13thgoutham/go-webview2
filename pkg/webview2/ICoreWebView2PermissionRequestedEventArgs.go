@@ -33,7 +33,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs) GetUri() (string, error) {
 
 	hr, _, _ := i.Vtbl.GetUri.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_uri)),
+		uintptr(unsafe.Pointer(&_uri)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

@@ -39,7 +39,7 @@ func (i *ICoreWebView2SaveAsUIShowingEventArgs) GetContentMimeType() (string, er
 
 	hr, _, _ := i.Vtbl.GetContentMimeType.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -144,7 +144,7 @@ func (i *ICoreWebView2SaveAsUIShowingEventArgs) GetSaveAsFilePath() (string, err
 
 	hr, _, _ := i.Vtbl.GetSaveAsFilePath.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)

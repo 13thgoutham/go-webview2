@@ -33,7 +33,7 @@ func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetUri() (string, e
 
 	hr, _, _ := i.Vtbl.GetUri.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_value)),
+		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
@@ -50,7 +50,7 @@ func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) GetChallenge() (str
 
 	hr, _, _ := i.Vtbl.GetChallenge.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(_challenge)),
+		uintptr(unsafe.Pointer(&_challenge)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return "", syscall.Errno(hr)
