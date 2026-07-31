@@ -1,7 +1,7 @@
 This is fork of [wailsapp/go-webview2](https://github.com/wailsapp/go-webview2) Because it seems the package is now being maintained as private under wails v3.
 
 
---
+----------------
 
 
 This is a locally maintained fork of [go-webview2](https://github.com/jchv/go-webview2) 
