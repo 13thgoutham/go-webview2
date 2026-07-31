@@ -87,7 +87,7 @@ func (i *ICoreWebView2Settings) PutIsWebMessageEnabled(isWebMessageEnabled bool)
 
 	hr, _, _ := i.Vtbl.PutIsWebMessageEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&isWebMessageEnabled)),
+		boolToUintptr(isWebMessageEnabled),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

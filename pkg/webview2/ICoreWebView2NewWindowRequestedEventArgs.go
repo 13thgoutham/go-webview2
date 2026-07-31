@@ -76,7 +76,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs) PutHandled(handled bool) erro
 
 	hr, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&handled)),
+		boolToUintptr(handled),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
