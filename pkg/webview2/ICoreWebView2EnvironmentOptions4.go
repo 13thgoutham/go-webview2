@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions4Vtbl struct {
-	IUnknownVtbl
+	ICoreWebView2EnvironmentOptions3Vtbl
 	GetCustomSchemeRegistrations ComProc
 	SetCustomSchemeRegistrations ComProc
 }

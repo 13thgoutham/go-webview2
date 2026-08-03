@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions3Vtbl struct {
-	IUnknownVtbl
+	ICoreWebView2EnvironmentOptions2Vtbl
 	GetIsCustomCrashReportingEnabled ComProc
 	PutIsCustomCrashReportingEnabled ComProc
 }

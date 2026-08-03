@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions5Vtbl struct {
-	IUnknownVtbl
+	ICoreWebView2EnvironmentOptions4Vtbl
 	GetEnableTrackingPrevention ComProc
 	PutEnableTrackingPrevention ComProc
 }

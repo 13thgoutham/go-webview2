@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions6Vtbl struct {
-	IUnknownVtbl
+	ICoreWebView2EnvironmentOptions5Vtbl
 	GetAreBrowserExtensionsEnabled ComProc
 	PutAreBrowserExtensionsEnabled ComProc
 }

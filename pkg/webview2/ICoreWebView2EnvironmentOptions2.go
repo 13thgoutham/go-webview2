@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions2Vtbl struct {
-	IUnknownVtbl
+	ICoreWebView2EnvironmentOptionsVtbl
 	GetExclusiveUserDataFolderAccess ComProc
 	PutExclusiveUserDataFolderAccess ComProc
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions7Vtbl struct {
-	IUnknownVtbl
+	ICoreWebView2EnvironmentOptions6Vtbl
 	GetChannelSearchKind ComProc
 	PutChannelSearchKind ComProc
 	GetReleaseChannels   ComProc
