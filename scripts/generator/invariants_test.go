@@ -2,7 +2,6 @@ package generator
 
 import (
 	"fmt"
-	"go/format"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -21,12 +20,20 @@ import (
 // They also fail loudly if a template change is right for the interface a golden covers and wrong
 // elsewhere -- which is the shape of every hand-patched fix in this package's history.
 
-// latestIDL is the version pinned in latest_version.txt.
-const latestIDL = "WebView2.1.0.2903.40.idl"
+// pinnedIDL reads the version from latest_version.txt rather than repeating it, because every
+// older IDL is still in the tree: a hand-copied constant would keep passing against 2903.40 long
+// after update_version_mapping.go moved the pin, and the tests would be asserting about output
+// nobody ships.
+func pinnedIDL(t *testing.T) string {
+	t.Helper()
+	version, err := os.ReadFile(filepath.Join("..", "latest_version.txt"))
+	require.NoError(t, err)
+	return "WebView2." + strings.TrimSpace(string(version)) + ".idl"
+}
 
 func generateFromPinnedIDL(t *testing.T) map[string]string {
 	t.Helper()
-	data, err := os.ReadFile(filepath.Join("..", latestIDL))
+	data, err := os.ReadFile(filepath.Join("..", pinnedIDL(t)))
 	require.NoError(t, err)
 	files, err := ParseIDL(data)
 	require.NoError(t, err)
@@ -44,7 +51,7 @@ func generateFromPinnedIDL(t *testing.T) map[string]string {
 // those derives from IUnknown, not from its predecessor.
 func interfaceBases(t *testing.T) map[string]string {
 	t.Helper()
-	data, err := os.ReadFile(filepath.Join("..", latestIDL))
+	data, err := os.ReadFile(filepath.Join("..", pinnedIDL(t)))
 	require.NoError(t, err)
 	idl, err := Parser.ParseBytes("", data)
 	require.NoError(t, err)
@@ -83,9 +90,7 @@ func TestVtableEmbedsDeclaredBase(t *testing.T) {
 	checked := 0
 	for name, base := range bases {
 		content, ok := files[name+".go"]
-		if !ok {
-			continue // forward declaration only
-		}
+		require.True(t, ok, "%s is declared but generated no file", name)
 		want := base + "Vtbl"
 		if base == "IUnknown" {
 			want = "IUnknownVtbl"
@@ -102,7 +107,10 @@ func TestVtableEmbedsDeclaredBase(t *testing.T) {
 			name, want, name, base)
 		checked++
 	}
-	require.Greater(t, checked, 250, "expected the pinned IDL to yield hundreds of interfaces")
+	// Exact, not a floor. A floor with two units of headroom would let one interface silently stop
+	// generating a file: the inner assertions are skipped for it and the count still clears the bar.
+	require.Equal(t, len(bases), checked, "every declared interface must have been checked")
+	require.NotZero(t, checked, "no interfaces were checked at all")
 }
 
 // TestQueryInterfaceAccessorReceiver checks the other half of the same mistake, with the rule that
@@ -123,26 +131,41 @@ func TestQueryInterfaceAccessorReceiver(t *testing.T) {
 	files := generateFromPinnedIDL(t)
 	bases := interfaceBases(t)
 
-	// root walks the declared chain to the ancestor whose own base is IUnknown.
+	// root walks the declared chain to the ancestor whose own base is IUnknown. The seen-set is not
+	// pedantry: production code grew the same guard, and without it a cyclic IDL would hang this
+	// test instead of failing it.
 	root := func(name string) string {
 		out := ""
+		seen := map[string]bool{name: true}
 		for {
 			base, ok := bases[name]
 			if !ok || base == "IUnknown" {
 				return out
 			}
+			require.False(t, seen[base], "inheritance cycle at %s", base)
+			seen[base] = true
 			out, name = base, base
+		}
+	}
+
+	// An accessor is generated exactly when the IDL base is not IUnknown -- interfacevtbl.tmpl
+	// guards on BaseClass, which generateVtbl blanks for IUnknown. Deriving the expected count from
+	// that rule, rather than from a magic floor, is what makes a silently-missing accessor fail.
+	wantAccessors := 0
+	for _, base := range bases {
+		if base != "IUnknown" {
+			wantAccessors++
 		}
 	}
 
 	checked, rerooted := 0, 0
 	for name, base := range bases {
 		content, ok := files[name+".go"]
-		if !ok {
+		require.True(t, ok, "%s is declared but generated no file", name)
+		if base == "IUnknown" {
+			require.NotContains(t, content, fmt.Sprintf(") Get%s() *%s {", name, name),
+				"%s derives from IUnknown, so no accessor should be generated for it", name)
 			continue
-		}
-		if !strings.Contains(content, fmt.Sprintf(") Get%s() *%s {", name, name)) {
-			continue // no accessor is generated for a chain root
 		}
 		receiver := root(name)
 		if receiver == "" {
@@ -155,10 +178,10 @@ func TestQueryInterfaceAccessorReceiver(t *testing.T) {
 			rerooted++
 		}
 		checked++
-		_ = base
 	}
-	require.GreaterOrEqual(t, checked, 80, "expected many version-suffixed accessors")
-	require.GreaterOrEqual(t, rerooted, 50,
+	require.Equal(t, wantAccessors, checked,
+		"every interface with a non-IUnknown base must have an accessor")
+	require.NotZero(t, rerooted,
 		"expected the Controller/Environment/Profile/Settings/Frame chains to root on their own object")
 }
 
@@ -192,6 +215,21 @@ func TestCallbackParamsFitInAUintptr(t *testing.T) {
 					"%s: callback parameter %q is a Go string (16 bytes); LPCWSTR arrives as a "+
 						"pointer, so it must be declared *uint16 or syscall.NewCallback rejects "+
 						"the whole vtable at init", fileName, fields[0])
+				// NewCallback rejects floats outright, with its own panic
+				// ("compileCallback: float arguments not supported"), so they fail at init exactly
+				// as an oversized argument does.
+				require.NotContains(t, []string{"float32", "float64"}, typ,
+					"%s: callback parameter %q is a float; syscall.NewCallback refuses to build "+
+						"the callback at all", fileName, fields[0])
+				// Anything wider than a register fails the same way, not just a string. These two
+				// are the aggregates maps.go classifies as too wide to pass in one -- keep the
+				// lists together if either changes.
+				for _, wide := range []string{"RECT", "COREWEBVIEW2_PHYSICAL_KEY_STATUS"} {
+					require.NotEqual(t, wide, typ,
+						"%s: callback parameter %q is a %s, which exceeds a register; "+
+							"syscall.NewCallback rejects the whole vtable at init",
+						fileName, fields[0], wide)
+				}
 				require.False(t, strings.HasPrefix(typ, "[]") || strings.Contains(typ, "interface{"),
 					"%s: callback parameter %q has type %s, which is wider than a uintptr",
 					fileName, fields[0], typ)
@@ -281,16 +319,47 @@ interface ICoreWebView2Probe : IUnknown {
 	}
 }
 
-// TestGeneratedOutputIsFormatted asserts the generator's output is a gofmt fixpoint. It was not,
-// and the committed tree was gofmt-clean anyway, meaning someone reformatted 306 files after each
-// regeneration. The cost was ~180 files differing from a fresh generation by import order and blank
-// lines alone -- enough noise to hide a real change in a regeneration diff, which is how
-// hand-patched output came to survive here in the first place.
-func TestGeneratedOutputIsFormatted(t *testing.T) {
-	for fileName, content := range generateFromPinnedIDL(t) {
-		formatted, err := format.Source([]byte(content))
-		require.NoError(t, err, "%s is not valid Go", fileName)
-		require.Equal(t, string(formatted), content,
-			"%s is not gofmt-clean as generated", fileName)
+// TestCommittedOutputMatchesGenerator is the invariant this whole generator-first arrangement
+// exists to establish, and until now it was the one thing left to a human running diff -r.
+//
+// The committed pkg/webview2 was NOT the output of the committed generator: fixes had been applied
+// to the 306 output files and never to the templates, so each regeneration silently reverted them.
+// Nothing detected that, because nothing compared the two. This does.
+//
+// It replaces a test that asserted the output was gofmt-clean. That one could not fail for the
+// reason it claimed: its input had already been through gofmtAll, so it was checking that
+// formatting formatted content is a no-op. Deliberately mangling a template still left it green.
+// gofmtAll's own error return is the real guard against a template emitting invalid Go.
+func TestCommittedOutputMatchesGenerator(t *testing.T) {
+	const committed = "../../pkg/webview2"
+	if _, err := os.Stat(committed); err != nil {
+		t.Skipf("%s is absent; the scripts module stays independently testable", committed)
+	}
+
+	generated := generateFromPinnedIDL(t)
+
+	entries, err := os.ReadDir(committed)
+	require.NoError(t, err)
+	onDisk := map[string]bool{}
+	for _, e := range entries {
+		if e.IsDir() || !strings.HasSuffix(e.Name(), ".go") || strings.HasSuffix(e.Name(), "_test.go") {
+			continue
+		}
+		onDisk[e.Name()] = true
+	}
+
+	for name, want := range generated {
+		require.True(t, onDisk[name],
+			"the generator produces %s but it is not committed; run the regeneration", name)
+		got, err := os.ReadFile(filepath.Join(committed, name))
+		require.NoError(t, err)
+		require.Equal(t, want, string(got),
+			"committed %s differs from generator output -- it has been hand-edited, or the "+
+				"regeneration was not run after a template change. Never fix generated output "+
+				"directly: the next regeneration reverts it.", name)
+	}
+	for name := range onDisk {
+		require.Contains(t, generated, name,
+			"%s is committed but the generator does not produce it", name)
 	}
 }

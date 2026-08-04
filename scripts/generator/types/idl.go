@@ -33,14 +33,18 @@ func (i *IDL) Process() error {
 }
 
 func (i *IDL) Generate() ([]*GeneratedFile, error) {
+	// Accumulate across libraries rather than returning inside the loop. Every WebView2 IDL
+	// declares exactly one, so the old early return was never wrong -- it just read as a loop while
+	// behaving like an index, which is the kind of thing that stops being harmless quietly.
+	var all []*GeneratedFile
 	for _, library := range i.Libraries {
 		files, err := library.Generate()
 		if err != nil {
 			return nil, err
 		}
-		return gofmtAll(files)
+		all = append(all, files...)
 	}
-	return nil, nil
+	return gofmtAll(all)
 }
 
 // gofmtAll formats every generated file, which the generator did not previously do although the
@@ -84,12 +88,22 @@ type Library struct {
 
 func (l *Library) Process() error {
 	l.packageName = strings.ToLower(l.Name)
-	// Index the interfaces before processing any of them: resolving an inheritance chain needs
-	// every declaration to be findable by name, and nothing guarantees a base is declared first.
+	// Index the interfaces AND the enums before processing any of them: resolving an inheritance
+	// chain needs every declaration to be findable by name, and nothing guarantees a base -- or an
+	// enum -- is declared first.
+	//
+	// The enums were previously registered as each one was processed, while Param.IsEnum() is
+	// consulted while processing an INTERFACE. An enum declared after the interface that uses it
+	// therefore looked like an unknown type, which used to mean a silently wrong &address and now
+	// means the generator stops with advice that does not apply. Microsoft's IDLs happen to put
+	// every enum first, which is the only reason this never fired.
 	l.interfaces = map[string]*InterfaceDeclaration{}
 	for _, declaration := range l.Declarations {
 		if declaration.Interface != nil {
 			l.interfaces[declaration.Interface.Name] = declaration.Interface
+		}
+		if declaration.Enum != nil {
+			l.enums.Add(declaration.Enum.Name)
 		}
 	}
 	for _, declaration := range l.Declarations {

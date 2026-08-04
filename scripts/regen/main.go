@@ -32,6 +32,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// Clear the directory first. Reusing one across two IDL versions otherwise leaves the files
+	// only the earlier version produced, and `diff -r` then reads as though they were still being
+	// generated -- which defeats the one thing this command exists for.
+	if err := os.RemoveAll(*out); err != nil {
+		log.Fatal(err)
+	}
 	if err := os.MkdirAll(*out, 0o755); err != nil {
 		log.Fatal(err)
 	}
