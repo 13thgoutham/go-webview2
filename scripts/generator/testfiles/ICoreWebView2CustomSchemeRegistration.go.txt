@@ -1,10 +1,11 @@
 //go:build windows
 
 package webview2
+
 import (
-	"unsafe"
-	"syscall"
 	"golang.org/x/sys/windows"
+	"syscall"
+	"unsafe"
 )
 
 type ICoreWebView2CustomSchemeRegistrationVtbl struct {
@@ -20,7 +21,6 @@ func (i *ICoreWebView2CustomSchemeRegistration) AddRef() uintptr {
 	refCounter, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
 	return refCounter
 }
-
 
 func (i *ICoreWebView2CustomSchemeRegistration) SetAllowedOrigins(allowedOriginsCount uint32, allowedOrigins string) error {
 

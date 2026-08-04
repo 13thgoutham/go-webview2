@@ -1,16 +1,17 @@
 //go:build windows
 
 package webview2
+
 import (
-	"unsafe"
-	"syscall"
 	"golang.org/x/sys/windows"
+	"syscall"
+	"unsafe"
 )
 
 type ICoreWebView2Vtbl struct {
 	IUnknownVtbl
 	AddNavigationStarting ComProc
-	GetSettings ComProc
+	GetSettings           ComProc
 }
 
 type ICoreWebView2 struct {
@@ -21,7 +22,6 @@ func (i *ICoreWebView2) AddRef() uintptr {
 	refCounter, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
 	return refCounter
 }
-
 
 func (i *ICoreWebView2) AddNavigationStarting(eventHandler *ICoreWebView2NavigationStartingEventHandler) (EventRegistrationToken, error) {
 

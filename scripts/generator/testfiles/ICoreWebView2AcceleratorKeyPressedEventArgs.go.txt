@@ -1,10 +1,11 @@
 //go:build windows
 
 package webview2
+
 import (
-	"unsafe"
-	"syscall"
 	"golang.org/x/sys/windows"
+	"syscall"
+	"unsafe"
 )
 
 type ICoreWebView2AcceleratorKeyPressedEventArgsVtbl struct {
@@ -20,7 +21,6 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) AddRef() uintptr {
 	refCounter, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
 	return refCounter
 }
-
 
 func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetKeyEventKind() (COREWEBVIEW2_KEY_EVENT_KIND, error) {
 

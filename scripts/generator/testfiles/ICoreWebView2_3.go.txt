@@ -1,10 +1,11 @@
 //go:build windows
 
 package webview2
+
 import (
-	"unsafe"
-	"syscall"
 	"golang.org/x/sys/windows"
+	"syscall"
+	"unsafe"
 )
 
 type ICoreWebView2_3Vtbl struct {
@@ -21,7 +22,6 @@ func (i *ICoreWebView2_3) AddRef() uintptr {
 	return refCounter
 }
 
-
 func (i *ICoreWebView2) GetICoreWebView2_3() *ICoreWebView2_3 {
 	var result *ICoreWebView2_3
 
@@ -33,7 +33,6 @@ func (i *ICoreWebView2) GetICoreWebView2_3() *ICoreWebView2_3 {
 
 	return result
 }
-
 
 func (i *ICoreWebView2_3) GetIsSuspended() (bool, error) {
 	// Create int32 to hold bool result
@@ -47,6 +46,6 @@ func (i *ICoreWebView2_3) GetIsSuspended() (bool, error) {
 		return false, syscall.Errno(hr)
 	}
 	// Get result and cleanup
-    isSuspended := _isSuspended != 0
+	isSuspended := _isSuspended != 0
 	return isSuspended, err
 }

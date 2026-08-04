@@ -1,10 +1,11 @@
 //go:build windows
 
 package webview2
+
 import (
-	"unsafe"
-	"syscall"
 	"golang.org/x/sys/windows"
+	"syscall"
+	"unsafe"
 )
 
 type ICoreWebView2ProcessFailedEventArgs2Vtbl struct {
@@ -21,7 +22,6 @@ func (i *ICoreWebView2ProcessFailedEventArgs2) AddRef() uintptr {
 	return refCounter
 }
 
-
 func (i *ICoreWebView2) GetICoreWebView2ProcessFailedEventArgs2() *ICoreWebView2ProcessFailedEventArgs2 {
 	var result *ICoreWebView2ProcessFailedEventArgs2
 
@@ -33,7 +33,6 @@ func (i *ICoreWebView2) GetICoreWebView2ProcessFailedEventArgs2() *ICoreWebView2
 
 	return result
 }
-
 
 func (i *ICoreWebView2ProcessFailedEventArgs2) GetExitCode() (int, error) {
 

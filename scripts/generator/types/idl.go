@@ -3,7 +3,9 @@ package types
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"github.com/leaanthony/slicer"
+	"go/format"
 	"log"
 	"strings"
 	"text/template"
@@ -32,9 +34,32 @@ func (i *IDL) Process() error {
 
 func (i *IDL) Generate() ([]*GeneratedFile, error) {
 	for _, library := range i.Libraries {
-		return library.Generate()
+		files, err := library.Generate()
+		if err != nil {
+			return nil, err
+		}
+		return gofmtAll(files)
 	}
 	return nil, nil
+}
+
+// gofmtAll formats every generated file, which the generator did not previously do although the
+// committed tree is gofmt-clean -- so somebody was formatting the output by hand afterwards. That
+// left ~180 files differing from a fresh generation by nothing but import order and blank lines,
+// which is enough noise to hide a real change in a regeneration diff, and hiding real changes in
+// regeneration diffs is how this package accumulated hand-patched output in the first place.
+//
+// The error path is a second, unlooked-for benefit: a template that emits invalid Go now fails the
+// generator by name instead of writing a file that only fails later at `go build`.
+func gofmtAll(files []*GeneratedFile) ([]*GeneratedFile, error) {
+	for _, f := range files {
+		formatted, err := format.Source(f.Content.Bytes())
+		if err != nil {
+			return nil, fmt.Errorf("generated %s is not valid Go: %w", f.FileName, err)
+		}
+		f.Content = bytes.NewBuffer(formatted)
+	}
+	return files, nil
 }
 
 type Import struct {
