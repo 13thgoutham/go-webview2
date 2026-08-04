@@ -363,3 +363,66 @@ func TestCommittedOutputMatchesGenerator(t *testing.T) {
 			"%s is committed but the generator does not produce it", name)
 	}
 }
+
+// TestVtableDeclaresEveryDeclaredMethod is the other half of the slot-offset argument, and the half
+// that was previously only asserted in a commit message.
+//
+// Embedding the base vtable is sufficient for correct offsets ONLY IF each interface also contributes
+// exactly its own methods, in the IDL's order. COM guarantees declaration order is vtable order, so
+// the remaining risk is a method going missing: if the parser ever dropped one -- a form it does not
+// recognise, a grammar change -- every slot after the gap would shift, and the failure would look
+// exactly like the bug this series fixed while every embedding assertion still passed.
+//
+// So count them. One embedded base, and one ComProc per declared method, for all 252 interfaces.
+func TestVtableDeclaresEveryDeclaredMethod(t *testing.T) {
+	files := generateFromPinnedIDL(t)
+
+	data, err := os.ReadFile(filepath.Join("..", pinnedIDL(t)))
+	require.NoError(t, err)
+	idl, err := Parser.ParseBytes("", data)
+	require.NoError(t, err)
+	require.NoError(t, idl.Process())
+
+	checked := 0
+	for _, lib := range idl.Libraries {
+		for _, d := range lib.Declarations {
+			if d.Interface == nil {
+				continue
+			}
+			name := d.Interface.Name
+			content, ok := files[name+".go"]
+			require.True(t, ok, "%s is declared but generated no file", name)
+
+			body := vtableBody(t, content, name)
+			procs, embeds := 0, 0
+			for _, line := range strings.Split(body, "\n") {
+				switch line = strings.TrimSpace(line); {
+				case line == "":
+				case strings.HasSuffix(line, "ComProc"):
+					procs++
+				case strings.HasSuffix(line, "Vtbl"):
+					embeds++
+				}
+			}
+			require.Equal(t, len(d.Interface.Methods), procs,
+				"%s declares %d methods in the IDL but its vtable has %d slots; every slot after "+
+					"the gap dispatches to the wrong function",
+				name, len(d.Interface.Methods), procs)
+			require.Equal(t, 1, embeds, "%s must embed exactly one base vtable", name)
+			checked++
+		}
+	}
+	require.NotZero(t, checked)
+}
+
+// vtableBody returns the field block of <name>Vtbl.
+func vtableBody(t *testing.T, content, name string) string {
+	t.Helper()
+	open := name + "Vtbl struct {"
+	i := strings.Index(content, open)
+	require.NotEqual(t, -1, i, "%s has no vtable struct", name)
+	rest := content[i+len(open):]
+	j := strings.Index(rest, "\n}")
+	require.NotEqual(t, -1, j, "%s's vtable struct is unterminated", name)
+	return rest[:j]
+}
