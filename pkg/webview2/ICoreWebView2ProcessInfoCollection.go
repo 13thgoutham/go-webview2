@@ -43,7 +43,7 @@ func (i *ICoreWebView2ProcessInfoCollection) GetValueAtIndex(index uint32) (*ICo
 
 	hr, _, _ := i.Vtbl.GetValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&index)),
+		uintptr(index),
 		uintptr(unsafe.Pointer(&value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

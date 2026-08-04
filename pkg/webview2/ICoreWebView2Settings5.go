@@ -55,7 +55,7 @@ func (i *ICoreWebView2Settings5) PutIsPinchZoomEnabled(value bool) error {
 
 	hr, _, _ := i.Vtbl.PutIsPinchZoomEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

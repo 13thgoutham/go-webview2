@@ -54,7 +54,7 @@ func (i *ICoreWebView2_24) RemoveNotificationReceived(token EventRegistrationTok
 
 	hr, _, _ := i.Vtbl.RemoveNotificationReceived.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

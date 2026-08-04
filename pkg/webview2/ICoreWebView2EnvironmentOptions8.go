@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions8Vtbl struct {
-	ICoreWebView2EnvironmentOptions7Vtbl
+	IUnknownVtbl
 	GetScrollBarStyle ComProc
 	PutScrollBarStyle ComProc
 }

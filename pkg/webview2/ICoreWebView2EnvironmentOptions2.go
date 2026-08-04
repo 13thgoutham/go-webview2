@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions2Vtbl struct {
-	ICoreWebView2EnvironmentOptionsVtbl
+	IUnknownVtbl
 	GetExclusiveUserDataFolderAccess ComProc
 	PutExclusiveUserDataFolderAccess ComProc
 }
@@ -43,7 +43,7 @@ func (i *ICoreWebView2EnvironmentOptions2) PutExclusiveUserDataFolderAccess(valu
 
 	hr, _, _ := i.Vtbl.PutExclusiveUserDataFolderAccess.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

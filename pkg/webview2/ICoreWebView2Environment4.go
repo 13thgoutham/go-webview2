@@ -40,7 +40,7 @@ func (i *ICoreWebView2Environment4) GetAutomationProviderForWindow(hwnd HWND) (*
 
 	hr, _, _ := i.Vtbl.GetAutomationProviderForWindow.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&hwnd)),
+		uintptr(hwnd),
 		uintptr(unsafe.Pointer(&value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

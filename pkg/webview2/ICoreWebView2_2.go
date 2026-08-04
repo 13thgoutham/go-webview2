@@ -59,7 +59,7 @@ func (i *ICoreWebView2_2) RemoveWebResourceResponseReceived(token EventRegistrat
 
 	hr, _, _ := i.Vtbl.RemoveWebResourceResponseReceived.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -98,7 +98,7 @@ func (i *ICoreWebView2_2) RemoveDOMContentLoaded(token EventRegistrationToken) e
 
 	hr, _, _ := i.Vtbl.RemoveDOMContentLoaded.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

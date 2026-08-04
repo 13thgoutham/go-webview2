@@ -61,7 +61,7 @@ func (i *ICoreWebView2_9) RemoveIsDefaultDownloadDialogOpenChanged(token EventRe
 
 	hr, _, _ := i.Vtbl.RemoveIsDefaultDownloadDialogOpenChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -149,9 +149,6 @@ func (i *ICoreWebView2_9) GetDefaultDownloadDialogMargin() (POINT, error) {
 
 func (i *ICoreWebView2_9) PutDefaultDownloadDialogMargin(value POINT) error {
 
-	// POINT is two int32s -- 8 bytes, so it is passed BY VALUE in a single register on x64,
-	// not by address. (RECT, at 16 bytes, exceeds the register and IS passed by address; the
-	// cutoff is why PutBounds nearby is correct as generated and this is not.)
 	hr, _, _ := i.Vtbl.PutDefaultDownloadDialogMargin.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(*(*uint64)(unsafe.Pointer(&value))),

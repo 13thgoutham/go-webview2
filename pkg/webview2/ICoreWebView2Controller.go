@@ -143,7 +143,7 @@ func (i *ICoreWebView2Controller) RemoveZoomFactorChanged(token EventRegistratio
 
 	hr, _, _ := i.Vtbl.RemoveZoomFactorChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -195,7 +195,7 @@ func (i *ICoreWebView2Controller) RemoveMoveFocusRequested(token EventRegistrati
 
 	hr, _, _ := i.Vtbl.RemoveMoveFocusRequested.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -222,7 +222,7 @@ func (i *ICoreWebView2Controller) RemoveGotFocus(token EventRegistrationToken) e
 
 	hr, _, _ := i.Vtbl.RemoveGotFocus.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -249,7 +249,7 @@ func (i *ICoreWebView2Controller) RemoveLostFocus(token EventRegistrationToken) 
 
 	hr, _, _ := i.Vtbl.RemoveLostFocus.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -276,7 +276,7 @@ func (i *ICoreWebView2Controller) RemoveAcceleratorKeyPressed(token EventRegistr
 
 	hr, _, _ := i.Vtbl.RemoveAcceleratorKeyPressed.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -302,7 +302,7 @@ func (i *ICoreWebView2Controller) PutParentWindow(parentWindow HWND) error {
 
 	hr, _, _ := i.Vtbl.PutParentWindow.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&parentWindow)),
+		uintptr(parentWindow),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

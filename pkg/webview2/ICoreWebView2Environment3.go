@@ -39,7 +39,7 @@ func (i *ICoreWebView2Environment3) CreateCoreWebView2CompositionController(Pare
 
 	hr, _, _ := i.Vtbl.CreateCoreWebView2CompositionController.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&ParentWindow)),
+		uintptr(ParentWindow),
 		uintptr(unsafe.Pointer(handler)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

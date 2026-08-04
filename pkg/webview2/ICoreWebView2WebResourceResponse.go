@@ -74,7 +74,7 @@ func (i *ICoreWebView2WebResourceResponse) GetStatusCode() (int, error) {
 
 	hr, _, _ := i.Vtbl.GetStatusCode.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(statusCode),
+		uintptr(unsafe.Pointer(&statusCode)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return 0, syscall.Errno(hr)

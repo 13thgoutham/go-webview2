@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2ObjectCollectionVtbl struct {
-	IUnknownVtbl
+	ICoreWebView2ObjectCollectionViewVtbl
 	RemoveValueAtIndex ComProc
 	InsertValueAtIndex ComProc
 }
@@ -23,7 +23,7 @@ func (i *ICoreWebView2ObjectCollection) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2ObjectCollection() *ICoreWebView2ObjectCollection {
+func (i *ICoreWebView2ObjectCollectionView) GetICoreWebView2ObjectCollection() *ICoreWebView2ObjectCollection {
 	var result *ICoreWebView2ObjectCollection
 
 	iidICoreWebView2ObjectCollection := NewGUID("{5cfec11c-25bd-4e8d-9e1a-7acdaeeec047}")
@@ -39,7 +39,7 @@ func (i *ICoreWebView2ObjectCollection) RemoveValueAtIndex(index uint32) error {
 
 	hr, _, _ := i.Vtbl.RemoveValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&index)),
+		uintptr(index),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -51,7 +51,7 @@ func (i *ICoreWebView2ObjectCollection) InsertValueAtIndex(index uint32, value *
 
 	hr, _, _ := i.Vtbl.InsertValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&index)),
+		uintptr(index),
 		uintptr(unsafe.Pointer(value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

@@ -58,7 +58,7 @@ func (i *ICoreWebView2MoveFocusRequestedEventArgs) PutHandled(value bool) error 
 
 	hr, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

@@ -22,7 +22,7 @@ func (i *ICoreWebView2ProcessFailedEventArgs3) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2ProcessFailedEventArgs3() *ICoreWebView2ProcessFailedEventArgs3 {
+func (i *ICoreWebView2ProcessFailedEventArgs) GetICoreWebView2ProcessFailedEventArgs3() *ICoreWebView2ProcessFailedEventArgs3 {
 	var result *ICoreWebView2ProcessFailedEventArgs3
 
 	iidICoreWebView2ProcessFailedEventArgs3 := NewGUID("{ab667428-094d-5fd1-b480-8b4c0fdbdf2f}")

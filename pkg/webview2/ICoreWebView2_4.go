@@ -56,7 +56,7 @@ func (i *ICoreWebView2_4) RemoveFrameCreated(token EventRegistrationToken) error
 
 	hr, _, _ := i.Vtbl.RemoveFrameCreated.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -83,7 +83,7 @@ func (i *ICoreWebView2_4) RemoveDownloadStarting(token EventRegistrationToken) e
 
 	hr, _, _ := i.Vtbl.RemoveDownloadStarting.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

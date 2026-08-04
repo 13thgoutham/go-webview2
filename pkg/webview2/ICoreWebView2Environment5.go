@@ -54,7 +54,7 @@ func (i *ICoreWebView2Environment5) RemoveBrowserProcessExited(token EventRegist
 
 	hr, _, _ := i.Vtbl.RemoveBrowserProcessExited.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

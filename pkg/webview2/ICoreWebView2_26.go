@@ -36,6 +36,7 @@ func (i *ICoreWebView2) GetICoreWebView2_26() *ICoreWebView2_26 {
 }
 
 func (i *ICoreWebView2_26) AddSaveFileSecurityCheckStarting(eventHandler *ICoreWebView2SaveFileSecurityCheckStartingEventHandler) (EventRegistrationToken, error) {
+
 	var token EventRegistrationToken
 
 	hr, _, _ := i.Vtbl.AddSaveFileSecurityCheckStarting.Call(
@@ -50,9 +51,10 @@ func (i *ICoreWebView2_26) AddSaveFileSecurityCheckStarting(eventHandler *ICoreW
 }
 
 func (i *ICoreWebView2_26) RemoveSaveFileSecurityCheckStarting(token EventRegistrationToken) error {
+
 	hr, _, _ := i.Vtbl.RemoveSaveFileSecurityCheckStarting.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

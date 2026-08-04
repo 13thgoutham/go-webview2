@@ -22,7 +22,7 @@ func (i *ICoreWebView2WebResourceRequestedEventArgs2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2WebResourceRequestedEventArgs2() *ICoreWebView2WebResourceRequestedEventArgs2 {
+func (i *ICoreWebView2WebResourceRequestedEventArgs) GetICoreWebView2WebResourceRequestedEventArgs2() *ICoreWebView2WebResourceRequestedEventArgs2 {
 	var result *ICoreWebView2WebResourceRequestedEventArgs2
 
 	iidICoreWebView2WebResourceRequestedEventArgs2 := NewGUID("{9c562c24-b219-4d7f-92f6-b187fbbadd56}")

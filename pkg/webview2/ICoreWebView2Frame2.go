@@ -34,7 +34,7 @@ func (i *ICoreWebView2Frame2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2Frame2() *ICoreWebView2Frame2 {
+func (i *ICoreWebView2Frame) GetICoreWebView2Frame2() *ICoreWebView2Frame2 {
 	var result *ICoreWebView2Frame2
 
 	iidICoreWebView2Frame2 := NewGUID("{7a6a5834-d185-4dbf-b63f-4a9bc43107d4}")
@@ -65,7 +65,7 @@ func (i *ICoreWebView2Frame2) RemoveNavigationStarting(token EventRegistrationTo
 
 	hr, _, _ := i.Vtbl.RemoveNavigationStarting.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -92,7 +92,7 @@ func (i *ICoreWebView2Frame2) RemoveContentLoading(token EventRegistrationToken)
 
 	hr, _, _ := i.Vtbl.RemoveContentLoading.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -119,7 +119,7 @@ func (i *ICoreWebView2Frame2) RemoveNavigationCompleted(token EventRegistrationT
 
 	hr, _, _ := i.Vtbl.RemoveNavigationCompleted.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -146,7 +146,7 @@ func (i *ICoreWebView2Frame2) RemoveDOMContentLoaded(token EventRegistrationToke
 
 	hr, _, _ := i.Vtbl.RemoveDOMContentLoaded.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -228,7 +228,7 @@ func (i *ICoreWebView2Frame2) RemoveWebMessageReceived(token EventRegistrationTo
 
 	hr, _, _ := i.Vtbl.RemoveWebMessageReceived.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

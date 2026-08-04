@@ -55,7 +55,7 @@ func (i *ICoreWebView2Controller4) PutAllowExternalDrop(value bool) error {
 
 	hr, _, _ := i.Vtbl.PutAllowExternalDrop.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

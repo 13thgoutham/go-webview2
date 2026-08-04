@@ -54,7 +54,7 @@ func (i *ICoreWebView2Environment10) CreateCoreWebView2ControllerWithOptions(Par
 
 	hr, _, _ := i.Vtbl.CreateCoreWebView2ControllerWithOptions.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&ParentWindow)),
+		uintptr(ParentWindow),
 		uintptr(unsafe.Pointer(options)),
 		uintptr(unsafe.Pointer(handler)),
 	)
@@ -68,7 +68,7 @@ func (i *ICoreWebView2Environment10) CreateCoreWebView2CompositionControllerWith
 
 	hr, _, _ := i.Vtbl.CreateCoreWebView2CompositionControllerWithOptions.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&ParentWindow)),
+		uintptr(ParentWindow),
 		uintptr(unsafe.Pointer(options)),
 		uintptr(unsafe.Pointer(handler)),
 	)

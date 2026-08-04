@@ -23,7 +23,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2PermissionRequestedEventArgs2() *ICoreWebView2PermissionRequestedEventArgs2 {
+func (i *ICoreWebView2PermissionRequestedEventArgs) GetICoreWebView2PermissionRequestedEventArgs2() *ICoreWebView2PermissionRequestedEventArgs2 {
 	var result *ICoreWebView2PermissionRequestedEventArgs2
 
 	iidICoreWebView2PermissionRequestedEventArgs2 := NewGUID("{74d7127f-9de6-4200-8734-42d6fb4ff741}")
@@ -55,7 +55,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs2) PutHandled(value bool) erro
 
 	hr, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

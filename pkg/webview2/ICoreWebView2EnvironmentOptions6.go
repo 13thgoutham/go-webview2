@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions6Vtbl struct {
-	ICoreWebView2EnvironmentOptions5Vtbl
+	IUnknownVtbl
 	GetAreBrowserExtensionsEnabled ComProc
 	PutAreBrowserExtensionsEnabled ComProc
 }
@@ -43,7 +43,7 @@ func (i *ICoreWebView2EnvironmentOptions6) PutAreBrowserExtensionsEnabled(value 
 
 	hr, _, _ := i.Vtbl.PutAreBrowserExtensionsEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

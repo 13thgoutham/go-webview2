@@ -29,7 +29,7 @@ func (i *ICoreWebView2PermissionSettingCollectionView) GetValueAtIndex(index uin
 
 	hr, _, _ := i.Vtbl.GetValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&index)),
+		uintptr(index),
 		uintptr(unsafe.Pointer(&permissionSetting)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

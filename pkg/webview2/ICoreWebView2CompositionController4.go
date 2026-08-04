@@ -25,7 +25,7 @@ func (i *ICoreWebView2CompositionController4) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2CompositionController4() *ICoreWebView2CompositionController4 {
+func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController4() *ICoreWebView2CompositionController4 {
 	var result *ICoreWebView2CompositionController4
 
 	iidICoreWebView2CompositionController4 := NewGUID("{7C367B9B-3D2B-450F-9E58-D61A20F486AA}")
@@ -43,7 +43,7 @@ func (i *ICoreWebView2CompositionController4) GetNonClientRegionAtPoint(point PO
 
 	hr, _, _ := i.Vtbl.GetNonClientRegionAtPoint.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&point)),
+		uintptr(*(*uint64)(unsafe.Pointer(&point))),
 		uintptr(unsafe.Pointer(&value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
@@ -86,7 +86,7 @@ func (i *ICoreWebView2CompositionController4) RemoveNonClientRegionChanged(token
 
 	hr, _, _ := i.Vtbl.RemoveNonClientRegionChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

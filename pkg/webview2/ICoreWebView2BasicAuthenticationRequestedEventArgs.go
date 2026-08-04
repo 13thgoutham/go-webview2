@@ -95,7 +95,7 @@ func (i *ICoreWebView2BasicAuthenticationRequestedEventArgs) PutCancel(cancel bo
 
 	hr, _, _ := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&cancel)),
+		boolToUintptr(cancel),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

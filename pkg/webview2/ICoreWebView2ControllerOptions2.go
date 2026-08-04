@@ -23,7 +23,7 @@ func (i *ICoreWebView2ControllerOptions2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2ControllerOptions2() *ICoreWebView2ControllerOptions2 {
+func (i *ICoreWebView2ControllerOptions) GetICoreWebView2ControllerOptions2() *ICoreWebView2ControllerOptions2 {
 	var result *ICoreWebView2ControllerOptions2
 
 	iidICoreWebView2ControllerOptions2 := NewGUID("{06c991d8-9e7e-11ed-a8fc-0242ac120002}")

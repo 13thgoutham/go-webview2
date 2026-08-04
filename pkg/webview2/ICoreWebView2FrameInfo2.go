@@ -24,7 +24,7 @@ func (i *ICoreWebView2FrameInfo2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2FrameInfo2() *ICoreWebView2FrameInfo2 {
+func (i *ICoreWebView2FrameInfo) GetICoreWebView2FrameInfo2() *ICoreWebView2FrameInfo2 {
 	var result *ICoreWebView2FrameInfo2
 
 	iidICoreWebView2FrameInfo2 := NewGUID("{56f85cfa-72c4-11ee-b962-0242ac120002}")

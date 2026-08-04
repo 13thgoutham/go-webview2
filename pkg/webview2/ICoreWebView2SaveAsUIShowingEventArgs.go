@@ -54,7 +54,7 @@ func (i *ICoreWebView2SaveAsUIShowingEventArgs) PutCancel(value bool) error {
 
 	hr, _, _ := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -82,7 +82,7 @@ func (i *ICoreWebView2SaveAsUIShowingEventArgs) PutSuppressDefaultDialog(value b
 
 	hr, _, _ := i.Vtbl.PutSuppressDefaultDialog.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -159,7 +159,7 @@ func (i *ICoreWebView2SaveAsUIShowingEventArgs) PutAllowReplace(value bool) erro
 
 	hr, _, _ := i.Vtbl.PutAllowReplace.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

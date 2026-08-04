@@ -154,7 +154,7 @@ func (i *ICoreWebView2EnvironmentOptions) PutAllowSingleSignOnUsingOSPrimaryAcco
 
 	hr, _, _ := i.Vtbl.PutAllowSingleSignOnUsingOSPrimaryAccount.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&allow)),
+		boolToUintptr(allow),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

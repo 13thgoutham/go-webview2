@@ -65,7 +65,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) PutTreatAsSecure(value bool) err
 
 	hr, _, _ := i.Vtbl.PutTreatAsSecure.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -81,7 +81,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) GetAllowedOrigins() (uint32, *st
 	hr, _, _ := i.Vtbl.GetAllowedOrigins.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(&allowedOriginsCount)),
-		uintptr(unsafe.Pointer(allowedOrigins)),
+		uintptr(unsafe.Pointer(&allowedOrigins)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return 0, nil, syscall.Errno(hr)
@@ -99,7 +99,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) SetAllowedOrigins(allowedOrigins
 
 	hr, _, _ := i.Vtbl.SetAllowedOrigins.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&allowedOriginsCount)),
+		uintptr(allowedOriginsCount),
 		uintptr(unsafe.Pointer(_allowedOrigins)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
@@ -128,7 +128,7 @@ func (i *ICoreWebView2CustomSchemeRegistration) PutHasAuthorityComponent(hasAuth
 
 	hr, _, _ := i.Vtbl.PutHasAuthorityComponent.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&hasAuthorityComponent)),
+		boolToUintptr(hasAuthorityComponent),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

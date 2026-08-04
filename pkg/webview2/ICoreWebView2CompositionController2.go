@@ -22,7 +22,7 @@ func (i *ICoreWebView2CompositionController2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2CompositionController2() *ICoreWebView2CompositionController2 {
+func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController2() *ICoreWebView2CompositionController2 {
 	var result *ICoreWebView2CompositionController2
 
 	iidICoreWebView2CompositionController2 := NewGUID("{0b6a3d24-49cb-4806-ba20-b5e0734a7b26}")

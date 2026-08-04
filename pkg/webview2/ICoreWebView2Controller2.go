@@ -51,9 +51,6 @@ func (i *ICoreWebView2Controller2) GetDefaultBackgroundColor() (COREWEBVIEW2_COL
 
 func (i *ICoreWebView2Controller2) PutDefaultBackgroundColor(value COREWEBVIEW2_COLOR) error {
 
-	// COREWEBVIEW2_COLOR is a 4-byte POD passed BY VALUE in a register, so the argument is
-	// the struct's bits, not its address. Reading it back out as a uint32 reproduces the
-	// exact memory layout rather than re-deriving the channel order by hand.
 	hr, _, _ := i.Vtbl.PutDefaultBackgroundColor.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(*(*uint32)(unsafe.Pointer(&value))),

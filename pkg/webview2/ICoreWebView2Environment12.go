@@ -40,7 +40,7 @@ func (i *ICoreWebView2Environment12) CreateSharedBuffer(Size uint64) (*ICoreWebV
 
 	hr, _, _ := i.Vtbl.CreateSharedBuffer.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&Size)),
+		uintptr(Size),
 		uintptr(unsafe.Pointer(&value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

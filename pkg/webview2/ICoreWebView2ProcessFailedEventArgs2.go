@@ -25,7 +25,7 @@ func (i *ICoreWebView2ProcessFailedEventArgs2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2ProcessFailedEventArgs2() *ICoreWebView2ProcessFailedEventArgs2 {
+func (i *ICoreWebView2ProcessFailedEventArgs) GetICoreWebView2ProcessFailedEventArgs2() *ICoreWebView2ProcessFailedEventArgs2 {
 	var result *ICoreWebView2ProcessFailedEventArgs2
 
 	iidICoreWebView2ProcessFailedEventArgs2 := NewGUID("{4dab9422-46fa-4c3e-a5d2-41d2071d3680}")
@@ -57,7 +57,7 @@ func (i *ICoreWebView2ProcessFailedEventArgs2) GetExitCode() (int, error) {
 
 	hr, _, _ := i.Vtbl.GetExitCode.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(exitCode),
+		uintptr(unsafe.Pointer(&exitCode)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return 0, syscall.Errno(hr)

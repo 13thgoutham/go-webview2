@@ -55,7 +55,7 @@ func (i *ICoreWebView2Environment8) RemoveProcessInfosChanged(token EventRegistr
 
 	hr, _, _ := i.Vtbl.RemoveProcessInfosChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

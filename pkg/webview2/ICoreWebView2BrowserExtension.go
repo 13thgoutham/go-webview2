@@ -92,7 +92,7 @@ func (i *ICoreWebView2BrowserExtension) Enable(isEnabled bool, handler *ICoreWeb
 
 	hr, _, _ := i.Vtbl.Enable.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&isEnabled)),
+		boolToUintptr(isEnabled),
 		uintptr(unsafe.Pointer(handler)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

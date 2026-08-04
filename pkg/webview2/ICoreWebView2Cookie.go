@@ -167,7 +167,7 @@ func (i *ICoreWebView2Cookie) PutIsHttpOnly(isHttpOnly bool) error {
 
 	hr, _, _ := i.Vtbl.PutIsHttpOnly.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&isHttpOnly)),
+		boolToUintptr(isHttpOnly),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -221,7 +221,7 @@ func (i *ICoreWebView2Cookie) PutIsSecure(isSecure bool) error {
 
 	hr, _, _ := i.Vtbl.PutIsSecure.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&isSecure)),
+		boolToUintptr(isSecure),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

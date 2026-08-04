@@ -23,7 +23,7 @@ func (i *ICoreWebView2Frame6) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2Frame6() *ICoreWebView2Frame6 {
+func (i *ICoreWebView2Frame) GetICoreWebView2Frame6() *ICoreWebView2Frame6 {
 	var result *ICoreWebView2Frame6
 
 	iidICoreWebView2Frame6 := NewGUID("{0de611fd-31e9-5ddc-9d71-95eda26eff32}")
@@ -54,7 +54,7 @@ func (i *ICoreWebView2Frame6) RemoveScreenCaptureStarting(token EventRegistratio
 
 	hr, _, _ := i.Vtbl.RemoveScreenCaptureStarting.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

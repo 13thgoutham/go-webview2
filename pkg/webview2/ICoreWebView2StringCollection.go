@@ -43,7 +43,7 @@ func (i *ICoreWebView2StringCollection) GetValueAtIndex(index uint32) (string, e
 
 	hr, _, _ := i.Vtbl.GetValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&index)),
+		uintptr(index),
 		uintptr(unsafe.Pointer(&_value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

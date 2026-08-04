@@ -37,7 +37,7 @@ func (i *ICoreWebView2PrintSettings2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2PrintSettings2() *ICoreWebView2PrintSettings2 {
+func (i *ICoreWebView2PrintSettings) GetICoreWebView2PrintSettings2() *ICoreWebView2PrintSettings2 {
 	var result *ICoreWebView2PrintSettings2
 
 	iidICoreWebView2PrintSettings2 := NewGUID("{CA7F0E1F-3484-41D1-8C1A-65CD44A63F8D}")
@@ -102,7 +102,7 @@ func (i *ICoreWebView2PrintSettings2) PutPagesPerSide(value int32) error {
 
 	hr, _, _ := i.Vtbl.PutPagesPerSide.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		uintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -128,7 +128,7 @@ func (i *ICoreWebView2PrintSettings2) PutCopies(value int32) error {
 
 	hr, _, _ := i.Vtbl.PutCopies.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		uintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

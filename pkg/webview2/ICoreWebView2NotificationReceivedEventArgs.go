@@ -61,7 +61,7 @@ func (i *ICoreWebView2NotificationReceivedEventArgs) PutHandled(value bool) erro
 
 	hr, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

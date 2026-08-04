@@ -55,7 +55,7 @@ func (i *ICoreWebView2Settings9) PutIsNonClientRegionSupportEnabled(value bool) 
 
 	hr, _, _ := i.Vtbl.PutIsNonClientRegionSupportEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

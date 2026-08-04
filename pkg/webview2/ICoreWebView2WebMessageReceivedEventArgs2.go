@@ -22,7 +22,7 @@ func (i *ICoreWebView2WebMessageReceivedEventArgs2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2WebMessageReceivedEventArgs2() *ICoreWebView2WebMessageReceivedEventArgs2 {
+func (i *ICoreWebView2WebMessageReceivedEventArgs) GetICoreWebView2WebMessageReceivedEventArgs2() *ICoreWebView2WebMessageReceivedEventArgs2 {
 	var result *ICoreWebView2WebMessageReceivedEventArgs2
 
 	iidICoreWebView2WebMessageReceivedEventArgs2 := NewGUID("{06fc7ab7-c90c-4297-9389-33ca01cf6d5e}")

@@ -275,7 +275,7 @@ func (i *ICoreWebView2PrintSettings) PutShouldPrintBackgrounds(shouldPrintBackgr
 
 	hr, _, _ := i.Vtbl.PutShouldPrintBackgrounds.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&shouldPrintBackgrounds)),
+		boolToUintptr(shouldPrintBackgrounds),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -303,7 +303,7 @@ func (i *ICoreWebView2PrintSettings) PutShouldPrintSelectionOnly(shouldPrintSele
 
 	hr, _, _ := i.Vtbl.PutShouldPrintSelectionOnly.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&shouldPrintSelectionOnly)),
+		boolToUintptr(shouldPrintSelectionOnly),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -331,7 +331,7 @@ func (i *ICoreWebView2PrintSettings) PutShouldPrintHeaderAndFooter(shouldPrintHe
 
 	hr, _, _ := i.Vtbl.PutShouldPrintHeaderAndFooter.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&shouldPrintHeaderAndFooter)),
+		boolToUintptr(shouldPrintHeaderAndFooter),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

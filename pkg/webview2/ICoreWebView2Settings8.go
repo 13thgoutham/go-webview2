@@ -55,7 +55,7 @@ func (i *ICoreWebView2Settings8) PutIsReputationCheckingRequired(value bool) err
 
 	hr, _, _ := i.Vtbl.PutIsReputationCheckingRequired.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

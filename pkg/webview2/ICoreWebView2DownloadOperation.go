@@ -59,7 +59,7 @@ func (i *ICoreWebView2DownloadOperation) RemoveBytesReceivedChanged(token EventR
 
 	hr, _, _ := i.Vtbl.RemoveBytesReceivedChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -86,7 +86,7 @@ func (i *ICoreWebView2DownloadOperation) RemoveEstimatedEndTimeChanged(token Eve
 
 	hr, _, _ := i.Vtbl.RemoveEstimatedEndTimeChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -113,7 +113,7 @@ func (i *ICoreWebView2DownloadOperation) RemoveStateChanged(token EventRegistrat
 
 	hr, _, _ := i.Vtbl.RemoveStateChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

@@ -23,7 +23,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2AcceleratorKeyPressedEventArgs2() *ICoreWebView2AcceleratorKeyPressedEventArgs2 {
+func (i *ICoreWebView2AcceleratorKeyPressedEventArgs) GetICoreWebView2AcceleratorKeyPressedEventArgs2() *ICoreWebView2AcceleratorKeyPressedEventArgs2 {
 	var result *ICoreWebView2AcceleratorKeyPressedEventArgs2
 
 	iidICoreWebView2AcceleratorKeyPressedEventArgs2 := NewGUID("{03b2c8c8-7799-4e34-bd66-ed26aa85f2bf}")
@@ -55,7 +55,7 @@ func (i *ICoreWebView2AcceleratorKeyPressedEventArgs2) PutIsBrowserAcceleratorKe
 
 	hr, _, _ := i.Vtbl.PutIsBrowserAcceleratorKeyEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

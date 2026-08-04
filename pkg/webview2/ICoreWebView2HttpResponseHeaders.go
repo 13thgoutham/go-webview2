@@ -47,7 +47,7 @@ func (i *ICoreWebView2HttpResponseHeaders) AppendHeader(name string, value strin
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
 	}
-	return err
+	return nil
 }
 
 func (i *ICoreWebView2HttpResponseHeaders) Contains(name string) (bool, error) {
@@ -55,7 +55,7 @@ func (i *ICoreWebView2HttpResponseHeaders) Contains(name string) (bool, error) {
 	// Convert string 'name' to *uint16
 	_name, err := UTF16PtrFromString(name)
 	if err != nil {
-		return false, nil
+		return false, err
 	} // Create int32 to hold bool result
 	var _value int32
 
@@ -77,7 +77,7 @@ func (i *ICoreWebView2HttpResponseHeaders) GetHeader(name string) (string, error
 	// Convert string 'name' to *uint16
 	_name, err := UTF16PtrFromString(name)
 	if err != nil {
-		return "", nil
+		return "", err
 	} // Create *uint16 to hold result
 	var _value *uint16
 

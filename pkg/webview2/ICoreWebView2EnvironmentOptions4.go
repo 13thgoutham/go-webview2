@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions4Vtbl struct {
-	ICoreWebView2EnvironmentOptions3Vtbl
+	IUnknownVtbl
 	GetCustomSchemeRegistrations ComProc
 	SetCustomSchemeRegistrations ComProc
 }
@@ -43,7 +43,7 @@ func (i *ICoreWebView2EnvironmentOptions4) SetCustomSchemeRegistrations(count ui
 
 	hr, _, _ := i.Vtbl.SetCustomSchemeRegistrations.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&count)),
+		uintptr(count),
 		uintptr(unsafe.Pointer(&schemeRegistrations)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

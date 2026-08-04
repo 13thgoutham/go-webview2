@@ -22,7 +22,7 @@ func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs2) AddRef() uintptr 
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2DevToolsProtocolEventReceivedEventArgs2() *ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 {
+func (i *ICoreWebView2DevToolsProtocolEventReceivedEventArgs) GetICoreWebView2DevToolsProtocolEventReceivedEventArgs2() *ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 {
 	var result *ICoreWebView2DevToolsProtocolEventReceivedEventArgs2
 
 	iidICoreWebView2DevToolsProtocolEventReceivedEventArgs2 := NewGUID("{2dc4959d-1494-4393-95ba-bea4cb9ebd1b}")

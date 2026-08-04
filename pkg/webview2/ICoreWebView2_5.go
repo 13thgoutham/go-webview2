@@ -54,7 +54,7 @@ func (i *ICoreWebView2_5) RemoveClientCertificateRequested(token EventRegistrati
 
 	hr, _, _ := i.Vtbl.RemoveClientCertificateRequested.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

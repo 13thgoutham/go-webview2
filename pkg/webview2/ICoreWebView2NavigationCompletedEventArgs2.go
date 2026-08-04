@@ -22,7 +22,7 @@ func (i *ICoreWebView2NavigationCompletedEventArgs2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2NavigationCompletedEventArgs2() *ICoreWebView2NavigationCompletedEventArgs2 {
+func (i *ICoreWebView2NavigationCompletedEventArgs) GetICoreWebView2NavigationCompletedEventArgs2() *ICoreWebView2NavigationCompletedEventArgs2 {
 	var result *ICoreWebView2NavigationCompletedEventArgs2
 
 	iidICoreWebView2NavigationCompletedEventArgs2 := NewGUID("{fdf8b738-ee1e-4db2-a329-8d7d7b74d792}")
@@ -40,7 +40,7 @@ func (i *ICoreWebView2NavigationCompletedEventArgs2) GetHttpStatusCode() (int, e
 
 	hr, _, _ := i.Vtbl.GetHttpStatusCode.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(value),
+		uintptr(unsafe.Pointer(&value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return 0, syscall.Errno(hr)

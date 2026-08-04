@@ -43,7 +43,7 @@ func (i *ICoreWebView2CookieList) GetValueAtIndex(index uint32) (*ICoreWebView2C
 
 	hr, _, _ := i.Vtbl.GetValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&index)),
+		uintptr(index),
 		uintptr(unsafe.Pointer(&value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

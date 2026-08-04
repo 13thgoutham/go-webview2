@@ -63,7 +63,7 @@ func (i *ICoreWebView2DownloadStartingEventArgs) PutCancel(cancel bool) error {
 
 	hr, _, _ := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&cancel)),
+		boolToUintptr(cancel),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

@@ -55,7 +55,7 @@ func (i *ICoreWebView2_14) RemoveServerCertificateErrorDetected(token EventRegis
 
 	hr, _, _ := i.Vtbl.RemoveServerCertificateErrorDetected.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

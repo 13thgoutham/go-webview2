@@ -25,7 +25,7 @@ func (i *ICoreWebView2CompositionController3) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2CompositionController3() *ICoreWebView2CompositionController3 {
+func (i *ICoreWebView2CompositionController) GetICoreWebView2CompositionController3() *ICoreWebView2CompositionController3 {
 	var result *ICoreWebView2CompositionController3
 
 	iidICoreWebView2CompositionController3 := NewGUID("{9570570e-4d76-4361-9ee1-f04d0dbdfb1e}")
@@ -44,8 +44,8 @@ func (i *ICoreWebView2CompositionController3) DragEnter(dataObject *IDataObject,
 	hr, _, _ := i.Vtbl.DragEnter.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(dataObject)),
-		uintptr(unsafe.Pointer(&keyState)),
-		uintptr(unsafe.Pointer(&point)),
+		uintptr(keyState),
+		uintptr(*(*uint64)(unsafe.Pointer(&point))),
 		uintptr(unsafe.Pointer(&effect)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
@@ -71,8 +71,8 @@ func (i *ICoreWebView2CompositionController3) DragOver(keyState uint32, point PO
 
 	hr, _, _ := i.Vtbl.DragOver.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&keyState)),
-		uintptr(unsafe.Pointer(&point)),
+		uintptr(keyState),
+		uintptr(*(*uint64)(unsafe.Pointer(&point))),
 		uintptr(unsafe.Pointer(&effect)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
@@ -88,8 +88,8 @@ func (i *ICoreWebView2CompositionController3) Drop(dataObject *IDataObject, keyS
 	hr, _, _ := i.Vtbl.Drop.Call(
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(dataObject)),
-		uintptr(unsafe.Pointer(&keyState)),
-		uintptr(unsafe.Pointer(&point)),
+		uintptr(keyState),
+		uintptr(*(*uint64)(unsafe.Pointer(&point))),
 		uintptr(unsafe.Pointer(&effect)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

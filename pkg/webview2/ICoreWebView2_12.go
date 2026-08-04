@@ -55,7 +55,7 @@ func (i *ICoreWebView2_12) RemoveStatusBarTextChanged(token EventRegistrationTok
 
 	hr, _, _ := i.Vtbl.RemoveStatusBarTextChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

@@ -47,7 +47,7 @@ func (i *ICoreWebView2ScreenCaptureStartingEventArgs) PutCancel(value bool) erro
 
 	hr, _, _ := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -75,7 +75,7 @@ func (i *ICoreWebView2ScreenCaptureStartingEventArgs) PutHandled(value bool) err
 
 	hr, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

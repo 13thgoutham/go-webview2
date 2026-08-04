@@ -45,7 +45,7 @@ func (i *ICoreWebView2ContextMenuItemCollection) GetValueAtIndex(index uint32) (
 
 	hr, _, _ := i.Vtbl.GetValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&index)),
+		uintptr(index),
 		uintptr(unsafe.Pointer(&value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
@@ -58,7 +58,7 @@ func (i *ICoreWebView2ContextMenuItemCollection) RemoveValueAtIndex(index uint32
 
 	hr, _, _ := i.Vtbl.RemoveValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&index)),
+		uintptr(index),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -70,7 +70,7 @@ func (i *ICoreWebView2ContextMenuItemCollection) InsertValueAtIndex(index uint32
 
 	hr, _, _ := i.Vtbl.InsertValueAtIndex.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&index)),
+		uintptr(index),
 		uintptr(unsafe.Pointer(value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {

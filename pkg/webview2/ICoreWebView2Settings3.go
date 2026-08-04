@@ -55,7 +55,7 @@ func (i *ICoreWebView2Settings3) PutAreBrowserAcceleratorKeysEnabled(value bool)
 
 	hr, _, _ := i.Vtbl.PutAreBrowserAcceleratorKeysEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

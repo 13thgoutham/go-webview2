@@ -49,7 +49,7 @@ func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) PutCancelSave(valu
 
 	hr, _, _ := i.Vtbl.PutCancelSave.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -128,7 +128,7 @@ func (i *ICoreWebView2SaveFileSecurityCheckStartingEventArgs) PutSuppressDefault
 
 	hr, _, _ := i.Vtbl.PutSuppressDefaultPolicy.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

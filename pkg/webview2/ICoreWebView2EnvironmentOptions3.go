@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions3Vtbl struct {
-	ICoreWebView2EnvironmentOptions2Vtbl
+	IUnknownVtbl
 	GetIsCustomCrashReportingEnabled ComProc
 	PutIsCustomCrashReportingEnabled ComProc
 }
@@ -43,7 +43,7 @@ func (i *ICoreWebView2EnvironmentOptions3) PutIsCustomCrashReportingEnabled(valu
 
 	hr, _, _ := i.Vtbl.PutIsCustomCrashReportingEnabled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

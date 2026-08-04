@@ -22,7 +22,7 @@ func (i *ICoreWebView2NewWindowRequestedEventArgs2) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2NewWindowRequestedEventArgs2() *ICoreWebView2NewWindowRequestedEventArgs2 {
+func (i *ICoreWebView2NewWindowRequestedEventArgs) GetICoreWebView2NewWindowRequestedEventArgs2() *ICoreWebView2NewWindowRequestedEventArgs2 {
 	var result *ICoreWebView2NewWindowRequestedEventArgs2
 
 	iidICoreWebView2NewWindowRequestedEventArgs2 := NewGUID("{bbc7baed-74c6-4c92-b63a-7f5aeae03de3}")

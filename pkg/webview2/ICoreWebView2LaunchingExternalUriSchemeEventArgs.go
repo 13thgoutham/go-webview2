@@ -97,7 +97,7 @@ func (i *ICoreWebView2LaunchingExternalUriSchemeEventArgs) PutCancel(value bool)
 
 	hr, _, _ := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

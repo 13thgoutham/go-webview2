@@ -165,7 +165,7 @@ func (i *ICoreWebView2) RemoveNavigationStarting(token EventRegistrationToken) e
 
 	hr, _, _ := i.Vtbl.RemoveNavigationStarting.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -192,7 +192,7 @@ func (i *ICoreWebView2) RemoveContentLoading(token EventRegistrationToken) error
 
 	hr, _, _ := i.Vtbl.RemoveContentLoading.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -219,7 +219,7 @@ func (i *ICoreWebView2) RemoveSourceChanged(token EventRegistrationToken) error 
 
 	hr, _, _ := i.Vtbl.RemoveSourceChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -246,7 +246,7 @@ func (i *ICoreWebView2) RemoveHistoryChanged(token EventRegistrationToken) error
 
 	hr, _, _ := i.Vtbl.RemoveHistoryChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -273,7 +273,7 @@ func (i *ICoreWebView2) RemoveNavigationCompleted(token EventRegistrationToken) 
 
 	hr, _, _ := i.Vtbl.RemoveNavigationCompleted.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -300,7 +300,7 @@ func (i *ICoreWebView2) RemoveFrameNavigationStarting(token EventRegistrationTok
 
 	hr, _, _ := i.Vtbl.RemoveFrameNavigationStarting.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -327,7 +327,7 @@ func (i *ICoreWebView2) RemoveFrameNavigationCompleted(token EventRegistrationTo
 
 	hr, _, _ := i.Vtbl.RemoveFrameNavigationCompleted.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -354,7 +354,7 @@ func (i *ICoreWebView2) RemoveScriptDialogOpening(token EventRegistrationToken) 
 
 	hr, _, _ := i.Vtbl.RemoveScriptDialogOpening.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -381,7 +381,7 @@ func (i *ICoreWebView2) RemovePermissionRequested(token EventRegistrationToken) 
 
 	hr, _, _ := i.Vtbl.RemovePermissionRequested.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -408,7 +408,7 @@ func (i *ICoreWebView2) RemoveProcessFailed(token EventRegistrationToken) error 
 
 	hr, _, _ := i.Vtbl.RemoveProcessFailed.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -552,7 +552,7 @@ func (i *ICoreWebView2) RemoveWebMessageReceived(token EventRegistrationToken) e
 
 	hr, _, _ := i.Vtbl.RemoveWebMessageReceived.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -703,7 +703,7 @@ func (i *ICoreWebView2) RemoveNewWindowRequested(token EventRegistrationToken) e
 
 	hr, _, _ := i.Vtbl.RemoveNewWindowRequested.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -730,7 +730,7 @@ func (i *ICoreWebView2) RemoveDocumentTitleChanged(token EventRegistrationToken)
 
 	hr, _, _ := i.Vtbl.RemoveDocumentTitleChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -822,7 +822,7 @@ func (i *ICoreWebView2) RemoveContainsFullScreenElementChanged(token EventRegist
 
 	hr, _, _ := i.Vtbl.RemoveContainsFullScreenElementChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -865,7 +865,7 @@ func (i *ICoreWebView2) RemoveWebResourceRequested(token EventRegistrationToken)
 
 	hr, _, _ := i.Vtbl.RemoveWebResourceRequested.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -930,7 +930,7 @@ func (i *ICoreWebView2) RemoveWindowCloseRequested(token EventRegistrationToken)
 
 	hr, _, _ := i.Vtbl.RemoveWindowCloseRequested.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

@@ -65,7 +65,7 @@ func (i *ICoreWebView2Frame) RemoveNameChanged(token EventRegistrationToken) err
 
 	hr, _, _ := i.Vtbl.RemoveNameChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -90,7 +90,7 @@ func (i *ICoreWebView2Frame) AddHostObjectToScriptWithOrigins(name string, objec
 		uintptr(unsafe.Pointer(i)),
 		uintptr(unsafe.Pointer(_name)),
 		uintptr(unsafe.Pointer(object)),
-		uintptr(unsafe.Pointer(&originsCount)),
+		uintptr(originsCount),
 		uintptr(unsafe.Pointer(_origins)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
@@ -136,7 +136,7 @@ func (i *ICoreWebView2Frame) RemoveDestroyed(token EventRegistrationToken) error
 
 	hr, _, _ := i.Vtbl.RemoveDestroyed.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

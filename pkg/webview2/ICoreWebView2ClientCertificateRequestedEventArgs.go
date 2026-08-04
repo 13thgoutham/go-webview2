@@ -56,7 +56,7 @@ func (i *ICoreWebView2ClientCertificateRequestedEventArgs) GetPort() (int, error
 
 	hr, _, _ := i.Vtbl.GetPort.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(value),
+		uintptr(unsafe.Pointer(&value)),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return 0, syscall.Errno(hr)
@@ -154,7 +154,7 @@ func (i *ICoreWebView2ClientCertificateRequestedEventArgs) PutCancel(value bool)
 
 	hr, _, _ := i.Vtbl.PutCancel.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -182,7 +182,7 @@ func (i *ICoreWebView2ClientCertificateRequestedEventArgs) PutHandled(value bool
 
 	hr, _, _ := i.Vtbl.PutHandled.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

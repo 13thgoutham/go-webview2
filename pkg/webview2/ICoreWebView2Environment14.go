@@ -84,7 +84,7 @@ func (i *ICoreWebView2Environment14) CreateObjectCollection(length uint32, items
 
 	hr, _, _ := i.Vtbl.CreateObjectCollection.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&length)),
+		uintptr(length),
 		uintptr(unsafe.Pointer(&items)),
 		uintptr(unsafe.Pointer(&objectCollection)),
 	)

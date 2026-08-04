@@ -32,7 +32,7 @@ func (i *ICoreWebView2HttpRequestHeaders) GetHeader(name string) (string, error)
 	// Convert string 'name' to *uint16
 	_name, err := UTF16PtrFromString(name)
 	if err != nil {
-		return "", nil
+		return "", err
 	} // Create *uint16 to hold result
 	var _value *uint16
 
@@ -75,7 +75,7 @@ func (i *ICoreWebView2HttpRequestHeaders) Contains(name string) (bool, error) {
 	// Convert string 'name' to *uint16
 	_name, err := UTF16PtrFromString(name)
 	if err != nil {
-		return false, nil
+		return false, err
 	} // Create int32 to hold bool result
 	var _value int32
 

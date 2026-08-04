@@ -23,7 +23,7 @@ func (i *ICoreWebView2Frame3) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2Frame3() *ICoreWebView2Frame3 {
+func (i *ICoreWebView2Frame) GetICoreWebView2Frame3() *ICoreWebView2Frame3 {
 	var result *ICoreWebView2Frame3
 
 	iidICoreWebView2Frame3 := NewGUID("{b50d82cc-cc28-481d-9614-cb048895e6a0}")
@@ -54,7 +54,7 @@ func (i *ICoreWebView2Frame3) RemovePermissionRequested(token EventRegistrationT
 
 	hr, _, _ := i.Vtbl.RemovePermissionRequested.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

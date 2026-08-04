@@ -23,7 +23,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs3) AddRef() uintptr {
 	return refCounter
 }
 
-func (i *ICoreWebView2) GetICoreWebView2PermissionRequestedEventArgs3() *ICoreWebView2PermissionRequestedEventArgs3 {
+func (i *ICoreWebView2PermissionRequestedEventArgs) GetICoreWebView2PermissionRequestedEventArgs3() *ICoreWebView2PermissionRequestedEventArgs3 {
 	var result *ICoreWebView2PermissionRequestedEventArgs3
 
 	iidICoreWebView2PermissionRequestedEventArgs3 := NewGUID("{e61670bc-3dce-4177-86d2-c629ae3cb6ac}")
@@ -55,7 +55,7 @@ func (i *ICoreWebView2PermissionRequestedEventArgs3) PutSavesInProfile(value boo
 
 	hr, _, _ := i.Vtbl.PutSavesInProfile.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)

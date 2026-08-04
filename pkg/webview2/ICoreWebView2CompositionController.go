@@ -61,8 +61,8 @@ func (i *ICoreWebView2CompositionController) SendMouseInput(eventKind COREWEBVIE
 		uintptr(unsafe.Pointer(i)),
 		uintptr(eventKind),
 		uintptr(virtualKeys),
-		uintptr(unsafe.Pointer(&mouseData)),
-		uintptr(unsafe.Pointer(&point)),
+		uintptr(mouseData),
+		uintptr(*(*uint64)(unsafe.Pointer(&point))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
@@ -130,7 +130,7 @@ func (i *ICoreWebView2CompositionController) RemoveCursorChanged(token EventRegi
 
 	hr, _, _ := i.Vtbl.RemoveCursorChanged.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&token)),
+		uintptr(*(*uint64)(unsafe.Pointer(&token))),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
