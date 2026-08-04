@@ -236,6 +236,17 @@ func (m *InterfaceMethod) processOutputParams() {
 	}
 }
 
+// CallbackInputs is GoInputs for a callback: the same parameters, declared in the shape the
+// Windows callback ABI actually delivers them in. Only interfaceInvoke.tmpl uses it. See
+// Param.AsCallbackType.
+func (m *InterfaceMethod) CallbackInputs() string {
+	var inputs slicer.StringSlicer
+	for _, param := range m.inputParams {
+		inputs.Add(param.Name + " " + param.AsCallbackType())
+	}
+	return inputs.Join(", ")
+}
+
 func (m *InterfaceMethod) SetupCode() string {
 	var buffer bytes.Buffer
 	for _, param := range m.Params {
@@ -264,6 +275,9 @@ func (m *InterfaceMethod) ReturnsHRESULT() bool {
 	return m.ReturnType == "HRESULT"
 }
 
+// ErrorValues is the early return taken when converting a string input fails. It keeps
+// "err" -- unlike the paths below -- because there the error is UTF16PtrFromString's, which
+// is a real Go error, and it is in scope (inputStringSetup.tmpl binds it).
 func (m *InterfaceMethod) ErrorValues() string {
 	var errorValues slicer.StringSlicer
 	for _, outputParam := range m.outputParams {
@@ -280,7 +294,9 @@ func (m *InterfaceMethod) ErrorValuesHRESULT() string {
 	if m.ReturnsHRESULT() {
 		errorValues.Add("syscall.Errno(hr)")
 	} else {
-		errorValues.Add("err")
+		// Not "err": the Call's Errno is not bound any more (see interfaceMethod.tmpl), and
+		// a method with no HRESULT has no status to report.
+		errorValues.Add("nil")
 	}
 	return errorValues.Join(", ")
 }
@@ -292,12 +308,14 @@ func (m *InterfaceMethod) GetHResultVariable() string {
 	return "_"
 }
 
+// SuccessValues is reached only after the HRESULT check passed, so the error is nil by
+// construction. It used to be "err" -- the Call's Errno -- which is non-nil on success.
 func (m *InterfaceMethod) SuccessValues() string {
 	var successValues slicer.StringSlicer
 	for _, outputParam := range m.outputParams {
 		successValues.Add(outputParam.GetReturnVariableName())
 	}
-	successValues.Add("err")
+	successValues.Add("nil")
 	return successValues.Join(", ")
 }
 
