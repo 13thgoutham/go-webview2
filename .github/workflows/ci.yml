@@ -1,0 +1,43 @@
+# The marshalling tests are the point of this workflow.
+#
+# pkg/webview2 is generated COM glue, and its failure mode is silent: a wrong argument conversion
+# compiles, links, runs and returns S_OK. Eight families of that shipped here, and none would have
+# been caught by review or by a build. They are caught by pkg/webview2/marshal_windows_test.go, which
+# builds a fake COM object out of Go callbacks and asserts on what actually arrives.
+#
+# That test needs Windows and nothing else -- no WebView2 Runtime, no Edge, no display, no network --
+# so a stock windows-latest runner is enough.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      # The binding itself, including the marshalling tests.
+      - run: go test ./...
+      - run: go vet ./pkg/webview2/
+
+  generator:
+    # The generator is a separate module and pure Go, so it needs no Windows. Its tests include the
+    # invariant that the committed pkg/webview2 IS the generator's output -- which is what stops a fix
+    # being applied to the generated files and silently reverted by the next regeneration.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go test ./...
+        working-directory: scripts
+      # Cross-compile the generated package for every target it claims to support.
+      - run: GOOS=windows GOARCH=amd64 go build ./...
+      - run: GOOS=windows GOARCH=arm64 go build ./pkg/...
