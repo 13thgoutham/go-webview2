@@ -71,10 +71,15 @@ func (d *InterfaceDeclaration) generateVtbl(packageName string, w io.Writer) err
 		HasInvokeMethod bool
 		Includes        []string
 		BaseClass       string
+		RootInterface   string
 		Header          *InterfaceHeader
 	}{
-		PackageName:     packageName,
-		BaseClass:       d.BaseClass,
+		PackageName: packageName,
+		BaseClass:   d.BaseClass,
+		// The vtable embeds the IMMEDIATE base, because that is what the memory layout is; the
+		// QueryInterface accessor hangs off the chain ROOT, because that is which object can
+		// answer it. Two different questions, so two fields.
+		RootInterface:   d.RootInterface(),
 		Header:          d.Header,
 		Name:            d.Name,
 		Methods:         d.Methods,
@@ -93,6 +98,36 @@ func (d *InterfaceDeclaration) GetBaseClass() string {
 		return ""
 	}
 	return d.BaseClass
+}
+
+// RootInterface walks the declared inheritance chain to its first member -- the ancestor whose own
+// base is IUnknown -- and returns "" if this interface IS that ancestor.
+//
+// This, not the immediate base, is where a QueryInterface accessor belongs, and the distinction is
+// the whole of what makes those accessors either useful or useless. QueryInterface asks an OBJECT
+// for another of its interfaces, so any interface on the same object can answer for any other. A
+// chain like ICoreWebView2 -> _2 -> ... -> _27 is all one object, so ICoreWebView2 can hand out
+// ICoreWebView2_14 directly and a caller need not walk thirteen accessors to reach it.
+//
+// What the chain root identifies is WHICH object. ICoreWebView2Controller2's root is
+// ICoreWebView2Controller, a different object from the webview -- so the accessor emitted on
+// ICoreWebView2 asked the wrong object and could only ever fail, while the controller, which can
+// answer, had no accessor at all. Rooting on the chain start fixes exactly those and leaves the
+// ICoreWebView2_N family where it already is, which is both correct and not an API break.
+//
+// An interface whose base is IUnknown has no sibling interface to be reached from, so those keep the
+// ICoreWebView2 receiver they ship with today; see interfacevtbl.tmpl.
+func (d *InterfaceDeclaration) RootInterface() string {
+	root := ""
+	for cur := d; cur != nil && cur.BaseClass != "IUnknown"; {
+		root = cur.BaseClass
+		next := cur.decl.library.interfaces[cur.BaseClass]
+		if next == nil || next == cur {
+			break // an external or undeclared base ends the chain
+		}
+		cur = next
+	}
+	return root
 }
 
 func (d *InterfaceDeclaration) generateInvoke(w io.Writer) error {

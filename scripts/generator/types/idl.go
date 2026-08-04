@@ -79,10 +79,19 @@ type Library struct {
 	forewardInterfaceDeclarations slicer.StringSlicer
 	enums                         slicer.StringSlicer
 	packageName                   string
+	interfaces                    map[string]*InterfaceDeclaration
 }
 
 func (l *Library) Process() error {
 	l.packageName = strings.ToLower(l.Name)
+	// Index the interfaces before processing any of them: resolving an inheritance chain needs
+	// every declaration to be findable by name, and nothing guarantees a base is declared first.
+	l.interfaces = map[string]*InterfaceDeclaration{}
+	for _, declaration := range l.Declarations {
+		if declaration.Interface != nil {
+			l.interfaces[declaration.Interface.Name] = declaration.Interface
+		}
+	}
 	for _, declaration := range l.Declarations {
 		err := declaration.Process(l)
 		if err != nil {
