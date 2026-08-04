@@ -26,6 +26,19 @@ func (i *ICoreWebView2Environment) AddRef() uintptr {
 	return refCounter
 }
 
+// Release drops one reference and returns the new count.
+//
+// AddRef was generated for all 252 interfaces and Release for none, which left every caller of a
+// Get<Interface>() accessor leaking: QueryInterface AddRefs on success and there was no matching
+// call to make, short of reaching through the embedded IUnknownVtbl for CallRelease. Additive, so
+// no existing caller changes.
+//
+// Not generated for handler interfaces: those are objects WE implement and hand to WebView2, so
+// their lifetime is the Go object's, and calling through the vtable would re-enter our own impl.
+func (i *ICoreWebView2Environment) Release() uint32 {
+	return i.Vtbl.CallRelease(unsafe.Pointer(i))
+}
+
 func (i *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow HWND, handler *ICoreWebView2CreateCoreWebView2ControllerCompletedHandler) error {
 
 	hr, _, _ := i.Vtbl.CreateCoreWebView2Controller.Call(
@@ -39,7 +52,7 @@ func (i *ICoreWebView2Environment) CreateCoreWebView2Controller(parentWindow HWN
 	return nil
 }
 
-func (i *ICoreWebView2Environment) CreateWebResourceResponse(content *IStream, statusCode int, reasonPhrase string, headers string) (*ICoreWebView2WebResourceResponse, error) {
+func (i *ICoreWebView2Environment) CreateWebResourceResponse(content *IStream, statusCode int32, reasonPhrase string, headers string) (*ICoreWebView2WebResourceResponse, error) {
 
 	// Convert string 'reasonPhrase' to *uint16
 	_reasonPhrase, err := UTF16PtrFromString(reasonPhrase)
