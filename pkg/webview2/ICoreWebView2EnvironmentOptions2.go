@@ -9,7 +9,7 @@ import (
 )
 
 type ICoreWebView2EnvironmentOptions2Vtbl struct {
-	ICoreWebView2EnvironmentOptionsVtbl
+	IUnknownVtbl
 	GetExclusiveUserDataFolderAccess ComProc
 	PutExclusiveUserDataFolderAccess ComProc
 }
@@ -21,6 +21,19 @@ type ICoreWebView2EnvironmentOptions2 struct {
 func (i *ICoreWebView2EnvironmentOptions2) AddRef() uintptr {
 	refCounter, _, _ := i.Vtbl.AddRef.Call(uintptr(unsafe.Pointer(i)))
 	return refCounter
+}
+
+// Release drops one reference and returns the new count.
+//
+// AddRef was generated for all 252 interfaces and Release for none, which left every caller of a
+// Get<Interface>() accessor leaking: QueryInterface AddRefs on success and there was no matching
+// call to make, short of reaching through the embedded IUnknownVtbl for CallRelease. Additive, so
+// no existing caller changes.
+//
+// Not generated for handler interfaces: those are objects WE implement and hand to WebView2, so
+// their lifetime is the Go object's, and calling through the vtable would re-enter our own impl.
+func (i *ICoreWebView2EnvironmentOptions2) Release() uint32 {
+	return i.Vtbl.CallRelease(unsafe.Pointer(i))
 }
 
 func (i *ICoreWebView2EnvironmentOptions2) GetExclusiveUserDataFolderAccess() (bool, error) {
@@ -43,7 +56,7 @@ func (i *ICoreWebView2EnvironmentOptions2) PutExclusiveUserDataFolderAccess(valu
 
 	hr, _, _ := i.Vtbl.PutExclusiveUserDataFolderAccess.Call(
 		uintptr(unsafe.Pointer(i)),
-		uintptr(unsafe.Pointer(&value)),
+		boolToUintptr(value),
 	)
 	if windows.Handle(hr) != windows.S_OK {
 		return syscall.Errno(hr)
