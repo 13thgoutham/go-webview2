@@ -11,7 +11,7 @@ name: CI
 
 on:
   push:
-    branches: [main,generator-is-the-source-of-truth]
+    branches: [main,fix/generator-is-the-source-of-truth]
   pull_request:
 
 jobs:
