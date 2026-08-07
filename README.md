@@ -1,5 +1,32 @@
 This is fork of [wailsapp/go-webview2](https://github.com/wailsapp/go-webview2) Because it seems the package is now being maintained as private under wails v3.
 
+## This fork declares its own module path
+
+`module github.com/13thgoutham/go-webview2`, renamed from upstream's path on **`main` only**. Consumers
+therefore require it directly:
+
+```
+require github.com/13thgoutham/go-webview2 v1.0.25
+```
+
+No `replace` directive is needed or wanted. `replace` means "temporarily substitute someone else's
+module", and neither half of that is true here: upstream's package moved into the Wails v3 monorepo
+under `internal/` (which cannot be imported), so it is not accepting patches and this fork is not
+temporary.
+
+**The upstream PR branches deliberately keep the original module path**, because upstream can only
+accept patches against its own path. Two consequences, and getting either wrong silently breaks a PR:
+
+- **Never rebase or merge `main` into a PR branch** (`pr/generator-first`, and the minimal-patch
+  branch behind wailsapp/go-webview2#36). That would drag the rename in and make the diff unmergeable.
+- **Port fixes branch-ward, not main-ward.** Author on `main`, then cherry-pick onto the PR branch and
+  revert the import paths in that commit -- 15 files, mechanical. Cherry-picking the other direction
+  puts the upstream path back on `main`.
+
+`scripts/` contains no module path, so a regeneration cannot revert the rename. That was checked
+rather than assumed, because output-only fixes reverting on regeneration is the exact defect this
+fork exists to correct.
+
 
 ----------------
 
